@@ -35,6 +35,17 @@ public class Date {
     {
         return month()+"/"+day()+"/"+year();
     }
+    public boolean equals(Object x)
+    {
+        if(this==x) return true;
+        if(x==null) return false;
+        if(this.getClass()!=x.getClass()) return false;
+        Date that=(Date) x;
+        if(this.day!=that.day) return false;
+        if(this.month!=that.month) return false;
+        if(this.year!=that.year) return false;
+        return true;
+    }
     @Test
     public void TestDate()
     {
