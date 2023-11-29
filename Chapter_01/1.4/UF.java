@@ -22,11 +22,29 @@ public class UF {
     }
 
     public int find(int p) {
-        return 0;
+
+        return id[p];
     }
 
     public void union(int p, int q) {
+        //将P和Q归并到相同的分量重
+        int pID=find(p);
+        int qID=find(q);
 
+        //如果p和q已经在相同的分量之中则不需要采取任何行动
+        if(pID==qID)
+        {
+            return;
+        }
+
+        //将P的分量重命名为Q的名称
+        for (int i = 0; i < id.length; i++) {
+            if(id[i]==pID)
+            {
+                id[i]=qID;
+            }
+        }
+        count--;
     }
 
     public static void main(String[] args) {
@@ -43,5 +61,4 @@ public class UF {
         }
         StdOut.println(uf.count()+" components");
     }
-
 }
