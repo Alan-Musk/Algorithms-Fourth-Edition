@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.Queue;
+
 public class BST<Key extends Comparable<Key>, Value> {
     private Node root;  // 二叉查找树的根节点
 
@@ -21,7 +23,6 @@ public class BST<Key extends Comparable<Key>, Value> {
     public Value get(Key key){
         return get(root,key);
     }
-
     private Value get(Node x,Key key){
         // 在以x为根节点的子树中查找并返回key所对应的值
         // 如果找不到 返回null
@@ -44,8 +45,123 @@ public class BST<Key extends Comparable<Key>, Value> {
         else x.value=value;
         x.N=size(x.left)+size(x.right)+1;
         return x;
-
-
+    }
+    public Key min(){
+        return min(root).key;
+    }
+    private Node min(Node x){
+        if(x.left==null) return x;
+        return min(x.left);
+    }
+    // Returns the largest key in the symbol table less than or equal to key.
+    public Key floor(Key key){
+        Node x = floor(root, key);
+        if(x==null) return null;
+        return x.key;
     }
 
+    private Node floor(Node x, Key key){
+        if (x == null) return null; // Base case: if the node is null, return null.
+        int cmp = key.compareTo(x.key); // Compare the given key with the key of the current node.
+
+        if (cmp == 0) return x; // If the keys are equal, we have found the floor value, return current node.
+
+        if (cmp < 0) {
+            // If the given key is less than the node's key, then the floor of the key
+            // must be in the left subtree.
+            return floor(x.left, key);
+        }
+
+        // If the given key is greater than the node's key, then the floor might be in the right subtree;
+        // however, if the right subtree call returns null, it means the largest key less than or equal to
+        // the given key is the key of the current node.
+        Node t = floor(x.right, key);
+        if (t != null) {
+            // If we found a node in the right subtree, return it.
+            return t;
+        } else {
+            // Otherwise, the current node is the floor.
+            return x;
+        }
+    }
+    public Key select(int k){
+        return select(root,k).key;
+    }
+    private Node select(Node x,int k){
+        // 返回排名为K的节点
+        if(x==null) return null;
+        int t=size(x.left);
+        if(t>k) return select(x.left,k);
+        else if(t<k) return select(x.right,k-t-1);
+        else return x;
+    }
+    public int rank(Key key){
+        return rank(key,root);
+    }
+    private int rank(Key key,Node x){
+        // 返回以x为根据点的子树中小于x.key的键的数量
+        if(x==null) return 0;
+        int cmp=key.compareTo(x.key);
+        if(cmp<0) return rank(key,x.left);
+        else if(cmp>0) return 1+size(x.left)+rank(key,x.right);
+        else return size(x.left);
+    }
+    public void deleteMin(){
+        root=deleteMin(root);
+    }
+    private Node deleteMin(Node x){
+        if(x.left==null) return x.right;
+        x.left=deleteMin(x.left);
+        x.N=size(x.left)+size(x.right)+1;
+        return x;
+    }
+    public void delete(Key key)
+    {
+        root=delete(root,key);
+    }
+    private Node delete(Node x,Key key){
+        if(x==null) return x.left;
+        int cmp=key.compareTo(x.key);
+        if(cmp<0) x.left=delete(x.left,key);
+        else if(cmp>0) x.right=delete(x.right,key);
+        else {
+            if(x.right==null) return x.left;
+            if(x.left==null) return x.right;
+            Node t=x;
+            x=min(t.right);
+            x.right=deleteMin(t.right);
+            x.left=t.left;
+        }
+        x.N=size(x.left)+size(x.right)+1;
+        return x;
+    }
+    public Key max()
+    {
+        if(root==null) return null;
+        return max(root).key;
+    }
+    private Node max(Node x)
+    {
+        if(x.right!=null) return max(x.right);
+        else return x;
+    }
+    public Iterable<Key> keys()
+    {
+        return keys(min(),max());
+    }
+    public Iterable<Key> keys(Key lo,Key hi)
+    {
+        Queue<Key> queue=new Queue<Key>();
+        keys(root,queue,lo,hi);
+        return queue;
+    }
+    private void keys(Node x,Queue<Key> queue,Key lo,Key hi)
+    {
+        if(x==null) return;
+        int cmplo=lo.compareTo(x.key);
+        int cmphi=hi.compareTo(x.key);
+        if(cmplo<0) keys(x.left,queue,lo,hi);
+        if(cmplo<=0 && cmphi>=0) queue.enqueue(x.key);
+        if(cmphi>0) keys(x.right,queue,lo,hi);
+    }
 }
