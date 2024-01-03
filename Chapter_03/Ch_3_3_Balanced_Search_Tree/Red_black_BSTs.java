@@ -95,7 +95,6 @@ public class Red_black_BSTs<Key extends Comparable<Key>, Value> {
         root=deleteMin(root);
         if(!isEmpty()) root.color=BLACK;
     }
-
     private Node deleteMin(Node h)
     {
         if(h.left==null) return null;
@@ -103,6 +102,8 @@ public class Red_black_BSTs<Key extends Comparable<Key>, Value> {
         h.left=deleteMin(h.left);
         return balance(h);
     }
+    // TODO
+    public Node moveRedLefe(Node x){}
     // 左旋转h的右链接
     public Node rotateLeft(Node h) {
         Node x = h.right;
@@ -114,7 +115,6 @@ public class Red_black_BSTs<Key extends Comparable<Key>, Value> {
         h.N = 1 + size(h.left) + size(h.right);
         return x;
     }
-
     // 右旋转h的左链接
     public Node rotateRight(Node h) {
         Node x = h.left;
@@ -126,7 +126,6 @@ public class Red_black_BSTs<Key extends Comparable<Key>, Value> {
         h.N = 1 + size(h.left) + size(h.right);
         return x;
     }
-    
     public void flipColors(Node h) {
         h.color = RED;
         h.left.color = BLACK;
