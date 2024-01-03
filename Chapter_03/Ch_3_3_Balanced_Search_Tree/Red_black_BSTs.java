@@ -126,9 +126,7 @@ public class Red_black_BSTs<Key extends Comparable<Key>, Value> {
         h.N = 1 + size(h.left) + size(h.right);
         return x;
     }
-
-
-
+    
     public void flipColors(Node h) {
         h.color = RED;
         h.left.color = BLACK;
