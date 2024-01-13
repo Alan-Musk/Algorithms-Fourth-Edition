@@ -38,4 +38,13 @@ public class Graph {
     public Iterable<Integer> adj(int v){
         return adj[v];
     }
+    // API 7: 对象的字符串表示
+    public String toString(){
+        StringBuilder sb=new StringBuilder("V:"+V+"  E:"+E+"\n");
+        for (Bag<Integer> i:
+             adj) {
+            sb.append(i.toString());
+        }
+        return sb.toString();
+    }
 }
