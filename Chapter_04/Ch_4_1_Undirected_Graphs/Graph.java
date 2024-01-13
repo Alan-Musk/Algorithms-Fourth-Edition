@@ -29,7 +29,7 @@ public class Graph {
     // API3: 顶点数
     public int V(){return V;}
     // API4: 边数
-    public int E(){return V;}
+    public int E(){return E;}
     // API 5: 向图中添加一条边 v-w
     public void addEdge(int v,int w){
         adj[v].add(w);
@@ -43,17 +43,13 @@ public class Graph {
     // API 7: 对象的字符串表示
     public String toString(){
         StringBuilder sb=new StringBuilder("V:"+V+"  E:"+E+"\n");
-        for (Bag<Integer> i:
-             adj) {
-            sb.append(i.toString());
-        }
-
         for (int v = 0; v <V; v++) {
             sb.append(v+": ");
             for (int w:this.adj(v)){
-                
+                sb.append(w+" ");
             }
-
+            sb.append("\n");
         }
+        return sb.toString();
     }
 }
