@@ -1,18 +1,11 @@
 import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.In;
 
 public class Graph {
     private final int V;    //顶点数目
     private int E; // 边的数目
     private Bag<Integer>[] adj; // 邻接表
-    // API1:创建一个含有V个顶点但不含有边的图
-    public Graph(int V){
-        this.V=V;this.E=0;
-        adj=(Bag<Integer>[])  new Bag[V];// 创建邻接表
-        // 将所有链表初始化为空
-        for(int v=0;v<V;v++){
-            adj[V]=new Bag<Integer>();
-        }
-    }
+
     // API2:从标准输入流in读取一幅图
     public Graph(In in){
         this(in.readInt()); // 读取V并将图初始化
@@ -22,6 +15,15 @@ public class Graph {
             int v=in.readInt();
             int w=in.readInt();
             addEdge(v,w); // 添加一条连接它们的边
+        }
+    }
+    // API1:创建一个含有V个顶点但不含有边的图
+    public Graph(int V){
+        this.V=V;this.E=0;
+        adj=(Bag<Integer>[])  new Bag[V];// 创建邻接表
+        // 将所有链表初始化为空
+        for(int v=0;v<V;v++){
+            adj[v]=new Bag<Integer>();
         }
     }
     // API3: 顶点数
@@ -45,6 +47,13 @@ public class Graph {
              adj) {
             sb.append(i.toString());
         }
-        return sb.toString();
+
+        for (int v = 0; v <V; v++) {
+            sb.append(v+": ");
+            for (int w:this.adj(v)){
+                
+            }
+
+        }
     }
 }
